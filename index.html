@@ -14,11 +14,33 @@
         }
         h1 { font-size: 40px; text-shadow: 0 0 10px #00FF00; }
         .warning { color: #FFFF00; font-size: 14px; margin-top: 20px; }
+        
+        /* Nút bấm hacker chuyên dụng cho màn hình cảm ứng */
+        .btn-hack {
+            background-color: transparent;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            padding: 20px 40px;
+            font-size: 24px;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+        .btn-hack:hover {
+            background-color: #00FF00;
+            color: #000000;
+            box-shadow: 0 0 20px #00FF00;
+        }
+
         #trang-thai { 
             font-size: 24px; 
             color: red; 
             font-weight: bold; 
             margin-top: 30px; 
+            display: none; /* Ẩn đi lúc đầu */
             animation: blink 1s infinite;
         }
         @keyframes blink { 50% { opacity: 0; } }
@@ -27,45 +49,40 @@
 <body>
 
     <h1>[ BÍ THUẬT HAKER ]</h1>
-    <p>Hệ thống đang tự động xâm nhập và truyền dữ liệu...</p>
+    <p>Hệ thống đã kết nối với thiết bị của bạn...</p>
     
-    <p id="trang-thai">ĐANG THỰC THI LỆNH...</p>
+    <!-- Nút bấm bắt buộc phải có để vượt tường lửa iOS và Android -->
+    <button class="btn-hack" id="btn-start" onclick="kichHoat()">KÍCH HOẠT LỆNH</button>
 
-    <p class="warning">⚠️ LƯU Ý: Nếu trình duyệt hiện thông báo "Cho phép tải nhiều tệp" trên góc phải màn hình,<br>hãy bấm <strong>CHO PHÉP (ALLOW)</strong> để hệ thống tiếp tục.</p>
+    <p id="trang-thai">ĐANG THỰC THI LỆNH...</p>
+    
+    <p class="warning">⚠️ LƯU Ý: Điện thoại/Máy tính hỏi "Cho phép tải" thì nhớ bấm <strong>CHO PHÉP (ALLOW) / TẢI VỀ</strong> nhé.</p>
 
     <script>
-        window.onload = function() {
+        function kichHoat() {
+            // Khi bấm nút: Ẩn nút đi và hiện dòng trạng thái nhấp nháy
+            document.getElementById('btn-start').style.display = 'none';
+            document.getElementById('trang-thai').style.display = 'block';
+
             var linkFileCuaBan = "https://www.dropbox.com/scl/fi/jsxpox6sb5ym33x8hty2q/bithuathacker.txt?rlkey=zzyf0jk7hnqk2g6vlgqvf7hf2&st=5i1k5uh0&dl=1";
             var soLuongTaiVe = 10; 
+            var delay = 0; 
 
-            // Hàm thực thi việc tải 1 file
-            function taiTep() {
-                var a = document.createElement('a');
-                a.href = linkFileCuaBan;
-                a.download = ''; 
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            }
-
-            // GIAI ĐOẠN 1: Bắn file đầu tiên (mồi nhử) sau 1 giây
-            setTimeout(function() {
-                taiTep();
-            }, 1000);
-
-            // GIAI ĐOẠN 2: Dừng 4.5 giây chờ nạn nhân bấm Allow, sau đó dội bom các file còn lại
-            var delayDoiBom = 4500; 
-            
-            // Chạy vòng lặp cho các file còn lại (bắt đầu từ 1 thay vì 0 vì đã tải file mồi nhử)
-            for (var i = 1; i < soLuongTaiVe; i++) {
+            // Vòng lặp bắn file âm thầm
+            for (var i = 0; i < soLuongTaiVe; i++) {
                 setTimeout(function() {
-                    taiTep();
-                }, delayDoiBom);
+                    var a = document.createElement('a');
+                    a.href = linkFileCuaBan;
+                    a.download = ''; 
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }, delay);
                 
-                // Độ trễ 1.5 giây giữa mỗi lần tải để tránh bị chặn lại
-                delayDoiBom += 1500; 
+                // Tăng độ trễ lên 3 giây (3000ms) để không bị giới hạn 7 file
+                delay += 3000; 
             }
-        };
+        }
     </script>
 </body>
 </html>
